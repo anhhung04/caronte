@@ -1,6 +1,4 @@
-version: "3.7"
 services:
-
   mongo:
     image: mongo:4.4
     networks:
@@ -11,6 +9,11 @@ services:
     image: ghcr.io/eciavatta/caronte:latest
     ports:
       - "3333:3333"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.caronte.rule=Host(`net.ad.hah4.tech`)"
+      - "traefik.http.services.caronte.loadbalancer.server.port=3333"
+      - "traefik.http.services.caronte.loadbalancer.server.scheme=http"
     environment:
       MONGO_HOST: mongo
       MONGO_PORT: 27017
@@ -18,7 +21,10 @@ services:
       - mongo
     networks:
       - acheronet
-    restart: unless-stopped
+      - proxy-internet
+    restart: always
 
 networks:
   acheronet:
+  proxy-internet:
+    external: true
