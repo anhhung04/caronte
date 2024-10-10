@@ -13,4 +13,8 @@ services:
       MONGO_PORT: 27017
     depends_on:
       - mongo
+    volumes:
+      - ./shared:/opt/caronte/shared
     restart: always
+    cpus: 2
+    mem_limit: 3g
