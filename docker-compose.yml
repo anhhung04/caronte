@@ -6,7 +6,8 @@ services:
     restart: unless-stopped
 
   caronte:
-    image: ghcr.io/eciavatta/caronte:latest
+    build: .
+    image: caronte:latest
     ports:
       - "3333:3333"
     labels:
